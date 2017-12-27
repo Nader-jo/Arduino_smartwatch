@@ -13,32 +13,32 @@
 #define CYAN    0x07FF
 #define YELLOW  0xFFE0  
 #define WHITE   0xFFFF
-int MenuPosition = 1,lastMenuPosition=1,SettingsMenuPosition = 1,lastSettingsMenuPosition=1,UtililyMenuPosition = 1,lastUtililyMenuPosition=1;
-int buttonUp = 5;
-int buttonDown = 7;
-int buttonSelect = 6;
-int bluetoothTx = 4; //Bluetooth tx pin on arduino
-int bluetoothRx = 3; //Bluetooth rx pin on arduino
+uint8_t MenuPosition = 1,lastMenuPosition=1,SettingsMenuPosition = 1,lastSettingsMenuPosition=1,UtililyMenuPosition = 1,lastUtililyMenuPosition=1;
+uint8_t buttonUp = 5;
+uint8_t buttonDown = 7;
+uint8_t buttonSelect = 6;
+uint8_t bluetoothTx = 4; //Bluetooth tx pin on arduino
+uint8_t bluetoothRx = 3; //Bluetooth rx pin on arduino
 long timeSet=0;
-int LED_status =0,prev_LED_status =0,Chrono_status =0,prev_Chrono_status =0,TorchMenuPosition=1,lastTorchMenuPosition=1,ChronoMenuPosition=1,lastChronoMenuPosition=1;
+uint8_t LED_status =0,prev_LED_status =0,Chrono_status =0,prev_Chrono_status =0,TorchMenuPosition=1,lastTorchMenuPosition=1,ChronoMenuPosition=1,lastChronoMenuPosition=1;
 SoftwareSerial bluetooth(bluetoothTx, bluetoothRx);
-int is_menu = 0;
+uint8_t is_menu = 0;
 
 TFT_ILI9163C TFT = TFT_ILI9163C(__CS, __DC);
-  const unsigned int GREY       =     TFT.Color565(64,64,64);
-  const unsigned int LIGHTBLUE  =     TFT.Color565(64,64,255);
-  const unsigned int LIGHTRED   =     TFT.Color565(255,64,64);
-  const unsigned int DARKBLUE   =     TFT.Color565(0,0,128);
-  const unsigned int DARKRED    =     TFT.Color565(128,0,0);
-uint16_t ccenterx,ccentery;//center x,y of the clock
-const uint16_t cradius  =   63;//radius of the clock
+  const uint16_t GREY       =     TFT.Color565(64,64,64);
+  const uint16_t LIGHTBLUE  =     TFT.Color565(64,64,255);
+  const uint16_t LIGHTRED   =     TFT.Color565(255,64,64);
+  const uint16_t DARKBLUE   =     TFT.Color565(0,0,128);
+  const uint16_t DARKRED    =     TFT.Color565(128,0,0);
+uint8_t ccenterx,ccentery;//center x,y of the clock
+const uint8_t cradius  =   63;//radius of the clock
 const float scosConst   =   0.0174532925;
 float sx = 0, sy = 1, mx = 1, my = 0, hx = -1, hy = 0;
 float sdeg=0, mdeg=0, hdeg=0;
-int prev=0,face=1,prevFace=1,s_timer=0,ms_timer=0;
+uint8_t prev=0,face=1,prevFace=1,s_timer=0,ms_timer=0;
 long previousMillis = 0,timerBegin=0,timerEnd=0;
-uint16_t osx,osy,omx,omy,ohx,ohy;
-uint16_t x0 = 0, x1 = 0, yy0 = 0, yy1 = 0;
+uint8_t osx,osy,omx,omy,ohx,ohy;
+uint8_t x0 = 0, x1 = 0, yy0 = 0, yy1 = 0;
 uint8_t hh,mm,ss,last_ss,hSet,mSet,sSet,alarmH,alarmM,chronoTimer=0;  //containers for current time
 static uint8_t conv2d(const char* p) {
   uint8_t v = 0;
@@ -71,20 +71,20 @@ static uint8_t conv2d(const char* p) {
 #define GRASSH            4     // grass height (inside floor, starts at floor y)
 
 // background
-const unsigned int BCKGRDCOL = TFT.Color565(138,235,244);
+const uint16_t BCKGRDCOL = TFT.Color565(138,235,244);
 // bird
-const unsigned int BIRDCOL = TFT.Color565(255,254,174);
+const uint16_t BIRDCOL = TFT.Color565(255,254,174);
 // pipe
-const unsigned int PIPECOL  = TFT.Color565(99,255,78);
+const uint16_t PIPECOL  = TFT.Color565(99,255,78);
 // pipe highlight
-const unsigned int PIPEHIGHCOL  = TFT.Color565(250,255,250);
+const uint16_t PIPEHIGHCOL  = TFT.Color565(250,255,250);
 // pipe seam
-const unsigned int PIPESEAMCOL  = TFT.Color565(0,0,0);
+const uint16_t PIPESEAMCOL  = TFT.Color565(0,0,0);
 // floor
-const unsigned int FLOORCOL = TFT.Color565(246,240,163);
+const uint16_t FLOORCOL = TFT.Color565(246,240,163);
 // grass (col2 is the stripe color)
-const unsigned int GRASSCOL  = TFT.Color565(141,225,87);
-const unsigned int GRASSCOL2 = TFT.Color565(156,239,88);
+const uint16_t GRASSCOL  = TFT.Color565(141,225,87);
+const uint16_t GRASSCOL2 = TFT.Color565(156,239,88);
 
 // bird sprite
 // bird sprite colors (Cx name for values to keep the array readable)
@@ -315,7 +315,7 @@ void loop() {
         is_menu = 0;
       }  
  }
-void torchBox(int n){
+void torchBox(uint8_t n){
   if(n==1) digitalWrite(A1, HIGH);
   else digitalWrite(A1, LOW);
 }
@@ -358,7 +358,7 @@ void torchBox(int n){
 void updateChrono(void){
   uint8_t k,c;
   for (k = 2; k < 4; k++) {
-      int cy=StandardGUIMenu(k, ChronoMenuPosition+1);
+      uint8_t cy=StandardGUIMenu(k, ChronoMenuPosition+1);
       TFT.setTextColor(WHITE);
       TFT.setTextSize(1);
       switch (k-1){
@@ -382,7 +382,7 @@ void printTimer(void){
   TFT.print(".");
   printDigits(int(ms_timer));
 }
-void runChrono(int k){
+void runChrono(uint8_t k){
   switch (k){
     case 0:{
       //s_timer=(timerEnd-timerBegin)/1000;
@@ -416,14 +416,14 @@ void runChrono(int k){
   }
   
   void setAlarm(void){ 
-    int prevH =alarmH,prevM=alarmM;
+    uint8_t prevH =alarmH,prevM=alarmM;
     TFT.fillScreen(BLACK); 
     TFT.setCursor(TFT.width()/9, TFT.height()/12);
     TFT.setTextColor(GREEN); 
     TFT.setTextSize(2);
     TFT.println("Set Alarm");
-    int h_local=alarmH;
-    int m_local=alarmM;
+    uint8_t h_local=alarmH;
+    uint8_t m_local=alarmM;
     TFT.setCursor(20, 34);
     TFT.setTextColor(YELLOW); 
     TFT.setTextSize(3);
@@ -475,15 +475,15 @@ void runChrono(int k){
   }
   
   void setTime(void){
-    int prevH =hh,prevM=mm,prevS=ss;
+    uint8_t prevH =hh,prevM=mm,prevS=ss;
     TFT.fillScreen(BLACK); 
     TFT.setCursor(TFT.width()/8, TFT.height()/12);
     TFT.setTextColor(GREEN); 
     TFT.setTextSize(2);
     TFT.println("Set Time");
-    int h_local=hh;
-    int m_local=mm;
-    int s_local=ss;
+    uint8_t h_local=hh;
+    uint8_t m_local=mm;
+    uint8_t s_local=ss;
     TFT.setCursor(20, 34);
     TFT.setTextColor(YELLOW); 
     TFT.setTextSize(3);
@@ -558,15 +558,15 @@ void runChrono(int k){
     sSet=s_local;
   }
   
-int select(void){
-  int BS = digitalRead(buttonSelect);
+uint8_t select(void){
+  uint8_t BS = digitalRead(buttonSelect);
   if((BS==1)){
     return(1);
   }else{
   return(0);
   }
 }
-int correctMenuPosition(int MenuPosition,int k){
+uint8_t correctMenuPosition(uint8_t MenuPosition,uint8_t k){
   if (MenuPosition<1){
     MenuPosition=k;
   }if (MenuPosition>k){
@@ -574,16 +574,16 @@ int correctMenuPosition(int MenuPosition,int k){
   }
   return MenuPosition;
 }
-int selectWatchType(int face){
+uint8_t selectWatchType(uint8_t face){
   MenuPosition = navigationMenu(5)+face;
   if (MenuPosition<0)MenuPosition=1;
   if (MenuPosition>1)MenuPosition=0;
   return(MenuPosition);
 }
-void tickBox(int MenuPosition){
-  int y1=3*TFT.height()/8-((TFT.height()-50)/4)/2;
-  int y2=5*TFT.height()/8-((TFT.height()-50)/4)/2;
-  int x= TFT.width()/2 +(TFT.width()-70)/2;
+void tickBox(uint8_t MenuPosition){
+  uint8_t y1=3*TFT.height()/8-((TFT.height()-50)/4)/2;
+  uint8_t y2=5*TFT.height()/8-((TFT.height()-50)/4)/2;
+  uint8_t x= TFT.width()/2 +(TFT.width()-70)/2;
   if (MenuPosition==1){
   TFT.fillRect(x, y1, 20, 20,BLUE);
   TFT.fillRect(x, y2, 20, 20,BLUE);
@@ -596,9 +596,9 @@ void tickBox(int MenuPosition){
   TFT.fillRect(x, y2, 20, 20,RED);
   }
 }
-int navigationMenu(int is_menu){
-  int BU= digitalRead(buttonUp);
-  int BD= digitalRead(buttonDown);
+uint8_t navigationMenu(uint8_t is_menu){
+  uint8_t BU= digitalRead(buttonUp);
+  uint8_t BD= digitalRead(buttonDown);
   if ((BU>0)&&(is_menu!=0)){
     return (-1);
   }else if ((BD>0)&&(is_menu=1)){
@@ -607,7 +607,7 @@ int navigationMenu(int is_menu){
     return (0);
   }
 }
-void updateMenu(int MenuPosition,int lastMenuPosition){
+void updateMenu(uint8_t MenuPosition,uint8_t lastMenuPosition){
   uint8_t k,c;
   k = MenuPosition;
   uint8_t cx, cy, x, y, w, h;
@@ -629,7 +629,7 @@ void updateMenu(int MenuPosition,int lastMenuPosition){
   Button(x, y, w, h,BLUE);
   writeMenuLabels(k,cy);
 }
-void Button(int x,int y,int w,int h,uint16_t COLOR){
+void Button(uint8_t x,uint8_t y,uint8_t w,uint8_t h,uint16_t COLOR){
   TFT.fillRect(x, y, w, h,COLOR);
   if(COLOR == BLUE){
     TFT.fillTriangle(x, y, x+w, y, x, y+h/3, LIGHTBLUE);
@@ -639,7 +639,7 @@ void Button(int x,int y,int w,int h,uint16_t COLOR){
     TFT.fillTriangle(x, y+h, x+w, y+h, x+w, y+3*h/4, DARKRED);
   }
 }
-void displayMenu(bool fill,int MenuPosition){
+void displayMenu(bool fill,uint8_t MenuPosition){
   TFT.fillScreen(BLACK); 
   TFT.setCursor(4*TFT.width()/12, TFT.height()/12);
   TFT.setTextColor(GREEN); 
@@ -647,11 +647,11 @@ void displayMenu(bool fill,int MenuPosition){
   TFT.println("Home");
   uint8_t k,c;
   for (k = 1; k < 5; k++) {
-      int cy=StandardGUIMenu(k,MenuPosition);
+      uint8_t cy=StandardGUIMenu(k,MenuPosition);
       writeMenuLabels(k,cy);
   }
 }
-void writeMenuLabels(int k,int cy){
+void writeMenuLabels(uint8_t k,uint8_t cy){
       TFT.setTextColor(WHITE);
       TFT.setTextSize(1);
       switch (k){
@@ -707,7 +707,7 @@ void watchtype(void){
       }
   }
 }
-void updateSettings(int MenuPosition, int lastMenuPosition){
+void updateSettings(uint8_t MenuPosition, uint8_t lastMenuPosition){
   uint8_t k,c;
   k=MenuPosition;
       uint8_t cx, cy, x, y, w, h;
@@ -728,7 +728,7 @@ void updateSettings(int MenuPosition, int lastMenuPosition){
       writeSettingsLabels(k,cy);
 }
 
-void displaySettings(bool fill,int MenuPosition){
+void displaySettings(bool fill,uint8_t MenuPosition){
   TFT.fillScreen(BLACK); 
   TFT.setCursor(1.5*TFT.width()/12, TFT.height()/12);
   TFT.setTextColor(GREEN); 
@@ -736,11 +736,11 @@ void displaySettings(bool fill,int MenuPosition){
   TFT.println("Settings");
   uint8_t k,c;
   for (k = 1; k < 5; k++) {
-      int cy=StandardGUIMenu(k, MenuPosition);
+      uint8_t cy=StandardGUIMenu(k, MenuPosition);
       writeSettingsLabels(k,cy);
   }
 }
-void writeSettingsLabels(int k, int cy){
+void writeSettingsLabels(uint8_t k, uint8_t cy){
 TFT.setTextColor(WHITE);
       TFT.setTextSize(1);
       switch (k){
@@ -762,7 +762,7 @@ TFT.setTextColor(WHITE);
              break;}
       }
 }
-void updateUtilities(int MenuPosition, int lastMenuPosition){
+void updateUtilities(uint8_t MenuPosition, uint8_t lastMenuPosition){
   uint8_t k,c;
   k=MenuPosition;
       uint8_t cx, cy, x, y, w, h;
@@ -782,7 +782,7 @@ void updateUtilities(int MenuPosition, int lastMenuPosition){
      Button(x, y, w, h,BLUE);
       writeUtiliyiesLabels(k,cy);
 }
-void writeUtiliyiesLabels(int k, int cy){
+void writeUtiliyiesLabels(uint8_t k, uint8_t cy){
 TFT.setTextColor(WHITE);
       TFT.setTextSize(1);
       switch (k){
@@ -804,7 +804,7 @@ TFT.setTextColor(WHITE);
              break;}
       }
 }
-int StandardGUIMenu(int k,int MenuPosition){
+uint8_t StandardGUIMenu(uint8_t k,uint8_t MenuPosition){
 uint8_t cx, cy, x, y, w, h;
       //  center
       cx = TFT.width()/2;
@@ -821,7 +821,7 @@ uint8_t cx, cy, x, y, w, h;
           }
       return(cy);
 }
-void displayUtilities(bool fill,int MenuPosition){
+void displayUtilities(bool fill,uint8_t MenuPosition){
   TFT.fillScreen(BLACK); 
   TFT.setCursor(TFT.width()/12, TFT.height()/12);
   TFT.setTextColor(GREEN); 
@@ -829,7 +829,7 @@ void displayUtilities(bool fill,int MenuPosition){
   TFT.println("Utilities");
   uint8_t k,c;
   for (k = 1; k < 5; k++) {
-      int cy = StandardGUIMenu(k,MenuPosition);
+      uint8_t cy = StandardGUIMenu(k,MenuPosition);
       writeUtiliyiesLabels(k,cy);
   }
 }
@@ -873,11 +873,11 @@ void displayUtilities(bool fill,int MenuPosition){
     TFT.println("BTchat");
   }
 }*/
-void vibrator(int n){
+void vibrator(uint8_t n){
   if(n==1) digitalWrite(A0, HIGH);
   else digitalWrite(A0, LOW);
 }
-int watchFace(int screen,int prev,int LastPrev) { 
+uint8_t watchFace(uint8_t screen,uint8_t prev,uint8_t LastPrev) { 
    if (prev!= LastPrev)
    {TFT.fillScreen(BLACK); 
    LastPrev = prev;
@@ -918,7 +918,7 @@ void numWatch(void){
 //    TFT.print(__DATE__);
 }
 
-void printDigits(int digits){
+void printDigits(uint8_t digits){
   // utility function for digital clock display: prints leading 0
    if(digits < 10)
     TFT.print('0');
@@ -937,7 +937,7 @@ void drawClockFace(){
   TFT.fillCircle(ccenterx, ccentery, cradius, WHITE);
   TFT.fillCircle(ccenterx, ccentery, cradius-4, BLACK);
   // Draw 12 lines
-  for(int i = 0; i<360; i+= 30) {
+  for(uint8_t i = 0; i<360; i+= 30) {
     sx = cos((i-90)*scosConst);
     sy = sin((i-90)*scosConst);
     x0 = sx*(cradius-4)+ccenterx;
@@ -1251,7 +1251,7 @@ void game_over() {
     if ( !(PIND & (select()==0)) ) break;
   }
 }
-void messageIcon(int x,int y,boolean test){
+void messageIcon(uint8_t x,uint8_t y,boolean test){
   if(test==true){
     TFT.fillRect(x+2,y+5,20,14,GREEN);
     TFT.fillRect(x+3,y+6,18,12,BLACK);
@@ -1268,7 +1268,7 @@ void messageIcon(int x,int y,boolean test){
     TFT.drawLine(x+12,y+12,x+21,y+6,GREY);
   }
 }
-void callIcon(int x,int y, boolean test){
+void callIcon(uint8_t x,uint8_t y, boolean test){
 if(test==true){
   // designing the phone icon
   TFT.fillRect(x+1,y+2,11,19,WHITE);
@@ -1301,7 +1301,7 @@ if(test==true){
   TFT.drawLine(x+14,y+13,x+20,y+19,GREY);
     }
 }
-void bluetoothIcon(int x,int y,boolean test){
+void bluetoothIcon(uint8_t x,uint8_t y,boolean test){
   if(test==true){
     TFT.fillCircle(x+11, y+11, 12, BLUE);
     
@@ -1330,7 +1330,7 @@ void bluetoothIcon(int x,int y,boolean test){
     TFT.drawLine(x+17,y+16,x+8,y+7,GREY);
   }
 }
-void AlarmIcon(int x,int y,boolean test){
+void AlarmIcon(uint8_t x,uint8_t y,boolean test){
   if(test==true){
     TFT.fillCircle(x+12, y+12, 12, YELLOW);
     TFT.fillCircle(x+12, y+12, 10, BLACK);
