@@ -609,6 +609,7 @@ uint8_t navigationMenu(uint8_t is_menu){
 }
 void updateMenu(uint8_t MenuPosition,uint8_t lastMenuPosition){
   uint8_t k,c;
+  char str1[12]="Watch",str2[12]="Set Time",str3[12]="Settings",str4[12]="Game";
   k = MenuPosition;
   uint8_t cx, cy, x, y, w, h;
   //  center
@@ -621,13 +622,13 @@ void updateMenu(uint8_t MenuPosition,uint8_t lastMenuPosition){
   y = cy - h / 2;
   Button(x, y, w, h,RED);
       //TFT.fillRect(x, y, w, h,RED);
-  writeMenuLabels(k,cy);
+  writeLabels(k,cy,str1,str2,str3,str4);
   k = lastMenuPosition;
   //  center
   cy = (2*k+1)*TFT.height()/10;
   y = cy - h / 2;
   Button(x, y, w, h,BLUE);
-  writeMenuLabels(k,cy);
+  writeLabels(k,cy,str1,str2,str3,str4);
 }
 void Button(uint8_t x,uint8_t y,uint8_t w,uint8_t h,uint16_t COLOR){
   TFT.fillRect(x, y, w, h,COLOR);
@@ -648,31 +649,33 @@ void displayMenu(bool fill,uint8_t MenuPosition){
   uint8_t k,c;
   for (k = 1; k < 5; k++) {
       uint8_t cy=StandardGUIMenu(k,MenuPosition);
-      writeMenuLabels(k,cy);
+      writeLabels(k,cy,"Watch","Set Time","Settings","Game");
   }
 }
-void writeMenuLabels(uint8_t k,uint8_t cy){
+
+void writeLabels(uint8_t k,uint8_t cy,char str1[12],char str2[12],char str3[12],char str4[12]){
       TFT.setTextColor(WHITE);
       TFT.setTextSize(1);
       switch (k){
          case 1:{
-            TFT.setCursor(6*TFT.width()/15,cy-2);
-            TFT.println("Watch");
+            TFT.setCursor((TFT.width()-5*strlen(str1))/2,cy-2);
+            TFT.println(str1);
             break;}
          case 2:{
-            TFT.setCursor(4*TFT.width()/12,cy-2);
-            TFT.println("Set Time");
+            TFT.setCursor((TFT.width()-5*strlen(str2))/2,cy-2);
+            TFT.println(str2);
             break;}
          case 3:{
-             TFT.setCursor(4*TFT.width()/12,cy-2);
-             TFT.println("Settings");
+             TFT.setCursor((TFT.width()-5*strlen(str3))/2,cy-2);
+             TFT.println(str3);
              break;} 
          case 4:{
-             TFT.setCursor(6*TFT.width()/15,cy-2);
-             TFT.println("Games");
+             TFT.setCursor((TFT.width()-5*strlen(str4))/2,cy-2);
+             TFT.println(str4);
              break;}
       }
 }
+
 void watchtype(void){
   TFT.fillScreen(BLACK); 
   TFT.setCursor(TFT.width()/24, TFT.height()/12);
@@ -709,6 +712,7 @@ void watchtype(void){
 }
 void updateSettings(uint8_t MenuPosition, uint8_t lastMenuPosition){
   uint8_t k,c;
+  char str1[12]="Watch type",str2[12]="Utilities",str3[12]="About",str4[12]="Back";
   k=MenuPosition;
       uint8_t cx, cy, x, y, w, h;
       //  center
@@ -720,12 +724,12 @@ void updateSettings(uint8_t MenuPosition, uint8_t lastMenuPosition){
       x = cx - w / 2;
       y = cy - h / 2;
      Button(x, y, w, h,RED);
-      writeSettingsLabels(k,cy);
+      writeLabels(k,cy,str1,str2,str3,str4);
       k=lastMenuPosition;
       cy = (2*k+1)*TFT.height()/10;
       y = cy - h / 2;
      Button(x, y, w, h,BLUE);
-      writeSettingsLabels(k,cy);
+      writeLabels(k,cy,str1,str2,str3,str4);
 }
 
 void displaySettings(bool fill,uint8_t MenuPosition){
@@ -737,33 +741,13 @@ void displaySettings(bool fill,uint8_t MenuPosition){
   uint8_t k,c;
   for (k = 1; k < 5; k++) {
       uint8_t cy=StandardGUIMenu(k, MenuPosition);
-      writeSettingsLabels(k,cy);
+      writeLabels(k,cy,"Watch type","Utilities","About","Back");
   }
 }
-void writeSettingsLabels(uint8_t k, uint8_t cy){
-TFT.setTextColor(WHITE);
-      TFT.setTextSize(1);
-      switch (k){
-         case 1:{
-            TFT.setCursor(4*TFT.width()/15,cy-2);
-            TFT.println("Watch type");
-            break;}
-         case 2:{
-            TFT.setCursor(4.5*TFT.width()/16,cy-2);
-            TFT.println("Utilities");
-            break;}
-         case 3:{
-             TFT.setCursor(6*TFT.width()/16,cy-2);
-             TFT.println("About");
-             break;} 
-         case 4:{
-             TFT.setCursor(6*TFT.width()/15,cy-2);
-             TFT.println("Back");
-             break;}
-      }
-}
+
 void updateUtilities(uint8_t MenuPosition, uint8_t lastMenuPosition){
   uint8_t k,c;
+  char str1[12]="Set Alarm",str2[12]="Light",str3[12]="Chronometer",str4[12]="Back";
   k=MenuPosition;
       uint8_t cx, cy, x, y, w, h;
       //  center
@@ -775,35 +759,14 @@ void updateUtilities(uint8_t MenuPosition, uint8_t lastMenuPosition){
       x = cx - w / 2;
       y = cy - h / 2;
      Button(x, y, w, h,RED);
-      writeUtiliyiesLabels(k,cy);
+      writeLabels(k,cy,str1,str2,str3,str4);
       k=lastMenuPosition;
       cy = (2*k+1)*TFT.height()/10;
       y = cy - h / 2;
      Button(x, y, w, h,BLUE);
-      writeUtiliyiesLabels(k,cy);
+      writeLabels(k,cy,str1,str2,str3,str4);
 }
-void writeUtiliyiesLabels(uint8_t k, uint8_t cy){
-TFT.setTextColor(WHITE);
-      TFT.setTextSize(1);
-      switch (k){
-         case 1:{
-            TFT.setCursor(5*TFT.width()/16,cy-2);
-            TFT.println("Set Alarm");
-            break;}
-         case 2:{
-            TFT.setCursor(6*TFT.width()/16,cy-2);
-            TFT.println("Light");
-            break;}
-         case 3:{
-             TFT.setCursor(4*TFT.width()/15,cy-2);
-             TFT.println("Chronometer");
-             break;} 
-         case 4:{
-             TFT.setCursor(6*TFT.width()/15,cy-2);
-             TFT.println("Back");
-             break;}
-      }
-}
+
 uint8_t StandardGUIMenu(uint8_t k,uint8_t MenuPosition){
 uint8_t cx, cy, x, y, w, h;
       //  center
@@ -830,7 +793,7 @@ void displayUtilities(bool fill,uint8_t MenuPosition){
   uint8_t k,c;
   for (k = 1; k < 5; k++) {
       uint8_t cy = StandardGUIMenu(k,MenuPosition);
-      writeUtiliyiesLabels(k,cy);
+      writeLabels(k,cy,"Set Alarm","Light","Chronometer","Back");
   }
 }
 /*int blutoothChat(char c){
