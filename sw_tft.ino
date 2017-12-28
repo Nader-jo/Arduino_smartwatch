@@ -1178,7 +1178,9 @@ void game_loop() {
   }
   
   // add a small delay to show how the player lost
+  vibrator(1);
   delay(1200);
+  vibrator(0);
 }
 
 // ---------------
