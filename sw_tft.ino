@@ -609,7 +609,7 @@ uint8_t navigationMenu(uint8_t is_menu){
 }
 void updateMenu(uint8_t MenuPosition,uint8_t lastMenuPosition){
   uint8_t k,c;
-  char str1[12]="Watch",str2[12]="Set Time",str3[12]="Settings",str4[12]="Game";
+  char str1[6]="Watch",str2[9]="Set Time",str3[9]="Settings",str4[5]="Game";
   k = MenuPosition;
   uint8_t cx, cy, x, y, w, h;
   //  center
@@ -653,7 +653,7 @@ void displayMenu(bool fill,uint8_t MenuPosition){
   }
 }
 
-void writeLabels(uint8_t k,uint8_t cy,char str1[12],char str2[12],char str3[12],char str4[12]){
+void writeLabels(uint8_t k,uint8_t cy,char str1[],char str2[],char str3[],char str4[]){
       TFT.setTextColor(WHITE);
       TFT.setTextSize(1);
       switch (k){
@@ -712,7 +712,7 @@ void watchtype(void){
 }
 void updateSettings(uint8_t MenuPosition, uint8_t lastMenuPosition){
   uint8_t k,c;
-  char str1[12]="Watch type",str2[12]="Utilities",str3[12]="About",str4[12]="Back";
+  char str1[11]="Watch type",str2[10]="Utilities",str3[6]="About",str4[5]="Back";
   k=MenuPosition;
       uint8_t cx, cy, x, y, w, h;
       //  center
@@ -747,7 +747,7 @@ void displaySettings(bool fill,uint8_t MenuPosition){
 
 void updateUtilities(uint8_t MenuPosition, uint8_t lastMenuPosition){
   uint8_t k,c;
-  char str1[12]="Set Alarm",str2[12]="Light",str3[12]="Chronometer",str4[12]="Back";
+  char str1[10]="Set Alarm",str2[6]="Light",str3[12]="Chronometer",str4[5]="Back";
   k=MenuPosition;
       uint8_t cx, cy, x, y, w, h;
       //  center
