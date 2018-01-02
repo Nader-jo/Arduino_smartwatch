@@ -596,12 +596,12 @@ void tickBox(uint8_t MenuPosition){
   TFT.fillRect(x, y2, 20, 20,RED);
   }
 }
-uint8_t navigationMenu(uint8_t is_menu){
+int8_t navigationMenu(uint8_t is_menu){
   uint8_t BU= digitalRead(buttonUp);
   uint8_t BD= digitalRead(buttonDown);
   if ((BU>0)&&(is_menu!=0)){
     return (-1);
-  }else if ((BD>0)&&(is_menu=1)){
+  }else if ((BD>0)&&(is_menu!=0)){
     return (1);
   }else {
     return (0);
@@ -900,7 +900,7 @@ void drawClockFace(){
   TFT.fillCircle(ccenterx, ccentery, cradius, WHITE);
   TFT.fillCircle(ccenterx, ccentery, cradius-4, BLACK);
   // Draw 12 lines
-  for(uint8_t i = 0; i<360; i+= 30) {
+  for(int i = 0; i<360; i+= 30) {
     sx = cos((i-90)*scosConst);
     sy = sin((i-90)*scosConst);
     x0 = sx*(cradius-4)+ccenterx;
@@ -951,7 +951,7 @@ unsigned long BootText() {
   TFT.println("  ");
   delay(400);
   TFT.setTextColor(RED);
-  TFT.println(" SmartWatch 0.7");
+  TFT.println(" SmartWatch 0.8");
   TFT.println(" Booting ...");
   delay(1000);
   TFT.setTextColor(BLUE);
@@ -977,7 +977,7 @@ void credit(void){
   TFT.setTextSize(1);
   TFT.println("Nader Industries. Inc");
   TFT.setTextColor(WHITE); 
-  TFT.println("This Smartwatch was  designed and built byNader Jomaa Software engineer.");
+  TFT.println("This Smartwatch was  designed and built byNader Jemaa Software engineer.");
   TFT.println(" ");
   TFT.println("nader.jomaa@yahoo.fr");
   TFT.println(" ");
