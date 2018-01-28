@@ -13,6 +13,7 @@
 #define CYAN    0x07FF
 #define YELLOW  0xFFE0  
 #define WHITE   0xFFFF
+bool alarm_status=true, message_status=true, call_status=true, bluetooth_status=true;
 uint8_t MenuPosition = 1,lastMenuPosition=1,SettingsMenuPosition = 1,lastSettingsMenuPosition=1,UtililyMenuPosition = 1,lastUtililyMenuPosition=1;
 uint8_t buttonUp = 5;
 uint8_t buttonDown = 7;
@@ -139,7 +140,9 @@ void setup(void) {
   pinMode(A0,OUTPUT);
   pinMode(A1,OUTPUT);
   pinMode(2,OUTPUT);
+  pinMode(A3,OUTPUT);
   digitalWrite(2, HIGH);
+  digitalWrite(A3, HIGH);
   TFT.begin();
   TFT.setRotation(2);
   BootText();
@@ -847,15 +850,15 @@ uint8_t watchFace(uint8_t screen,uint8_t prev,uint8_t LastPrev) {
    if (screen==0) drawClockFace();
    } 
    if (screen==0){
-    watch(); prev=screen;
+    watch(alarm_status, message_status, call_status, bluetooth_status); prev=screen;
   }else if(screen==1){
-    numWatch();prev=screen;
+    numWatch(alarm_status, message_status, call_status, bluetooth_status);prev=screen;
   }return(prev);
 }
 
 
 
-void numWatch(void){
+void numWatch(bool alarm_status, bool message_status, bool call_status, bool bluetooth_status){
     TFT.setCursor(6, 24);
     TFT.fillRect(0,0,(TFT.width()-1),75, BLACK);
     //TFT.setCursor(6, 24);
@@ -871,10 +874,10 @@ void numWatch(void){
     TFT.setCursor(84, 61);
     TFT.setTextSize(2);
     printDigits(int(ss));
-    AlarmIcon(7,90,true);
-    messageIcon(37,90,true);
-    callIcon(67,90,true);
-    bluetoothIcon(97,90,true);
+    AlarmIcon(7,90,alarm_status);
+    messageIcon(37,90,message_status);
+    callIcon(67,90,call_status);
+    bluetoothIcon(97,90,bluetooth_status);
 //    TFT.setCursor(31, 112);
 //    TFT.setTextColor(WHITE); 
 //    TFT.setTextSize(1);
@@ -888,13 +891,13 @@ void printDigits(uint8_t digits){
    TFT.print(digits);
  }
  
-void watch(void){
+void watch(bool alarm_status, bool message_status, bool call_status, bool bluetooth_status){
     eraseClockHands(hh,mm,ss);
+    AlarmIcon(35,35,alarm_status);
+    messageIcon(69,35,message_status);
+    callIcon(35,69,call_status);
+    bluetoothIcon(69,69,bluetooth_status);
     drawClockHands(hh,mm,ss);
-    /*AlarmIcon(0,0,true);
-    messageIcon(104,0,true);
-    callIcon(0,104,true);
-    bluetoothIcon(104,104,true);*/
 }
 void drawClockFace(){
   TFT.fillCircle(ccenterx, ccentery, cradius, WHITE);
