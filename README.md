@@ -1,4 +1,4 @@
-# sw_tft
+# Arduino Smartwatch tft
 
 This is a basic smartwatch concept that runs on arduino mini pro (ATmega328).
 
