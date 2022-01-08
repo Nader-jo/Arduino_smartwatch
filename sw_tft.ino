@@ -26,11 +26,11 @@ SoftwareSerial bluetooth(bluetoothTx, bluetoothRx);
 uint8_t is_menu = 0;
 
 TFT_ILI9163C TFT = TFT_ILI9163C(__CS, __DC);
-  const uint16_t GREY       =     TFT.Color565(64,64,64);
-  const uint16_t LIGHTBLUE  =     TFT.Color565(64,64,255);
-  const uint16_t LIGHTRED   =     TFT.Color565(255,64,64);
-  const uint16_t DARKBLUE   =     TFT.Color565(0,0,128);
-  const uint16_t DARKRED    =     TFT.Color565(128,0,0);
+const uint16_t GREY       =     TFT.Color565(64,64,64);
+const uint16_t LIGHTBLUE  =     TFT.Color565(64,64,255);
+const uint16_t LIGHTRED   =     TFT.Color565(255,64,64);
+const uint16_t DARKBLUE   =     TFT.Color565(0,0,128);
+const uint16_t DARKRED    =     TFT.Color565(128,0,0);
 uint8_t ccenterx,ccentery;//center x,y of the clock
 const uint8_t cradius  =   63;//radius of the clock
 const float scosConst   =   0.0174532925;
@@ -946,7 +946,7 @@ void drawClockHands(uint8_t h,uint8_t m,uint8_t s){
 
 unsigned long BootText() {
   unsigned long start = micros();
-    TFT.fillScreen(BLACK); 
+  TFT.fillScreen(BLACK); 
   TFT.setCursor(2, 2);
   TFT.setTextColor(GREEN); 
   TFT.setTextSize(1);
@@ -968,9 +968,9 @@ unsigned long BootText() {
   TFT.println("  ");
   delay(400);
   TFT.setTextColor(WHITE);
-    TFT.println(" Feb 2017"); 
-    TFT.println(" Tunis, Tunisia");
-    TFT.fillScreen(BLACK); 
+  TFT.println(" Feb 2017"); 
+  TFT.println(" Tunis, Tunisia");
+  TFT.fillScreen(BLACK); 
   return micros() - start;
 }
 void credit(void){
